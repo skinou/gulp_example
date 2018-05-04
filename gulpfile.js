@@ -15,8 +15,25 @@ var browserSync = require("browser-sync").create();//浏览器实时刷新
 
 //删除dist下的所有文件
 gulp.task('delete',function(cb){
-    return del(['dist/*','!dist/images'],cb);
+    // return del(['dist/*','!dist/images'],cb);
+    return del(['dist/*'],cb);
 })
+
+gulp.task('deleteImg',function(cb){
+    // return del(['dist/*','!dist/images'],cb);
+    return del(['dist/images/*'],cb);
+})
+
+gulp.task('deleteJs',function(cb){
+    // return del(['dist/*','!dist/images'],cb);
+    return del(['dist/js/*'],cb);
+})
+
+gulp.task('deleteCss',function(cb){
+    // return del(['dist/*','!dist/images'],cb);
+    return del(['dist/css/*'],cb);
+})
+
 
 //压缩html
 gulp.task('html', function () {
@@ -84,7 +101,7 @@ gulp.task("script",function(){
 
 // 压缩图片
 gulp.task('images', function () {
-    gulp.src('./src/images/*.*')
+    gulp.src(['./src/images/*.*'])
         .pipe(changed('dist/images', {hasChanged: changed.compareSha1Digest}))
         .pipe(imageMin({
             progressive: true,// 无损压缩JPG图片
@@ -94,6 +111,8 @@ gulp.task('images', function () {
         .pipe(gulp.dest('dist/images'))
         .pipe(browserSync.reload({stream:true}));
 });
+
+
 
 //启动热更新
 gulp.task('serve', ['delete'], function() {
@@ -108,6 +127,7 @@ gulp.task('serve', ['delete'], function() {
     // gulp.watch('src/less/*.less', ['less']);
     gulp.watch('src/sass/*.scss', ['sass']);
     gulp.watch('src/*.html', ['html']);
+    // gulp.watch('src/images/*.*', ['deleteImg','images']);
     gulp.watch('src/images/*.*', ['images']);
     gulp.watch('src/static/*.*', ['static']);
 });
