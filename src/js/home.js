@@ -3,20 +3,15 @@ $(function(){
     var w = $(window).width();
     console.log(h,w);
 
-    $('.home').css({"height":h,"width":w})
+    $('.container').css({"height":h,"width":w})
 
     $('.model').click(function(){
         $(this).fadeOut();
     })
 
-    
-    $('.home-box').click(function(){
-        // $('.model').show();
+     $('.home-btn').click(function(){
         $(".model").fadeToggle("slow");
     })
-
-
-
 
 
 })

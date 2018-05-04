@@ -1,13 +1,14 @@
 var gulp     = require('gulp'),
-    concat   = require('gulp-concat'),//- 多个文件合并为一个；
-    cleanCSS = require('gulp-clean-css'),//- 压缩CSS为一行；
-    ugLify   = require('gulp-uglify'),//压缩js
-    imageMin = require('gulp-imagemin'),//压缩图片
-    pngquant = require('imagemin-pngquant'), // 深度压缩
-    htmlMin  = require('gulp-htmlmin'),//压缩html
-    changed  = require('gulp-changed'),//检查改变状态
-    // less     = require('gulp-less')//压缩合并less
-    sass     = require('gulp-sass');//压缩合并sass
+    concat   = require('gulp-concat'),          //- 多个文件合并为一个；
+    cleanCSS = require('gulp-clean-css'),       //- 压缩CSS为一行；
+    ugLify   = require('gulp-uglify'),          //压缩js
+    imageMin = require('gulp-imagemin'),        //压缩图片
+    pngquant = require('imagemin-pngquant'),    // 深度压缩
+    htmlMin  = require('gulp-htmlmin'),         //压缩html
+    changed  = require('gulp-changed'),         //检查改变状态
+    // less     = require('gulp-less')          //压缩合并less
+    sass     = require('gulp-sass'),            //压缩合并sass
+    rename   = require("gulp-rename");          //重命名  
 
 var del     = require('del')
 var browserSync = require("browser-sync").create();//浏览器实时刷新
@@ -45,11 +46,15 @@ gulp.task('html', function () {
 //         .pipe(browserSync.reload({stream:true}));
 // });
 
+
 //合并静态js资源
 gulp.task('static', function () {
     gulp.src(['src/static/*.js']) //多个文件以数组形式传入
         .pipe(changed('dist/js', {hasChanged: changed.compareSha1Digest}))
         .pipe(ugLify())
+        .pipe(rename({
+            suffix: ".min"
+        }))
         .pipe(gulp.dest('dist/js'))
         .pipe(browserSync.reload({stream:true}));
 });
