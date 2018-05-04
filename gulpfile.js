@@ -1,10 +1,3 @@
-// const gulp = require('gulp');
-//
-// gulp.task('default', function() {
-//     console.log('123123123')
-// });
-//
-
 var gulp     = require('gulp'),
     concat   = require('gulp-concat'),//- 多个文件合并为一个；
     cleanCSS = require('gulp-clean-css'),//- 压缩CSS为一行；
@@ -13,7 +6,7 @@ var gulp     = require('gulp'),
     pngquant = require('imagemin-pngquant'), // 深度压缩
     htmlMin  = require('gulp-htmlmin'),//压缩html
     changed  = require('gulp-changed'),//检查改变状态
-    less     = require('gulp-less')//压缩合并less
+    // less     = require('gulp-less')//压缩合并less
     sass     = require('gulp-sass');//压缩合并sass
 
 var del     = require('del')
@@ -99,7 +92,7 @@ gulp.task('images', function () {
 
 //启动热更新
 gulp.task('serve', ['delete'], function() {
-    gulp.start('script','sass','html','static');
+    gulp.start('script','sass','html','static','images');
     browserSync.init({
         port: 2017,
         server: {
@@ -107,8 +100,8 @@ gulp.task('serve', ['delete'], function() {
         }
     });
     gulp.watch('src/js/*.js', ['script']);         //监控文件变化，自动更新
-    gulp.watch('src/less/*.less', ['less']);
-    gulp.watch('src/sass/*.sass', ['sass']);
+    // gulp.watch('src/less/*.less', ['less']);
+    gulp.watch('src/sass/*.scss', ['sass']);
     gulp.watch('src/*.html', ['html']);
     gulp.watch('src/images/*.*', ['images']);
     gulp.watch('src/static/*.*', ['static']);
